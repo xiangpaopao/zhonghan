@@ -7,12 +7,20 @@
 //
 
 #import "AppDelegate.h"
+#import <NewRelicAgent/NewRelicAgent.h>
+#import "DCIntrospect.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+  
+  [NewRelicAgent startWithApplicationToken:@"AA471c45a8fa83b59d8eccc3472ab0161347965f5b"];
+  
+  [self.window makeKeyAndVisible];
+	[[DCIntrospect sharedIntrospector] start];
+  
     return YES;
 }
 							
