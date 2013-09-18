@@ -51,7 +51,8 @@
     NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
     cell = [topLevelObjects objectAtIndex:0];
   }
-  
+
+  [cell configure];
   
   return cell;
 }

@@ -28,7 +28,18 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+  [self configure];
 }
+
+-(void)configure
+{
+  [self.imageView setImage:[UIImage imageNamed:@"book_thumb"]];
+  [self.titleLabel setText:@"2013年第二三期"];
+  [self.dateLabel setText:@"2013.05.12更新"];
+  
+  
+}
+
 
 - (void)didReceiveMemoryWarning
 {

@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import <NewRelicAgent/NewRelicAgent.h>
 #import "DCIntrospect.h"
+#import "RavenClient.h"
 
 @implementation AppDelegate
 
@@ -21,6 +22,10 @@
   [self.window makeKeyAndVisible];
 	[[DCIntrospect sharedIntrospector] start];
   
+  
+  [RavenClient clientWithDSN:@"http://f5328160d7cd47658736678501e3ec25:3ae9f0c370454bcfb881effadcc09356@sentry.airad.com/11"];
+  [[RavenClient sharedClient] setupExceptionHandler];
+
     return YES;
 }
 							

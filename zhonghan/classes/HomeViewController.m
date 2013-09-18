@@ -7,7 +7,7 @@
 //
 
 #import "HomeViewController.h"
-
+#import "ODRefreshControl.h"
 
 @interface HomeViewController ()
 
@@ -41,6 +41,28 @@
 {
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
+  
+  self.msgLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"home_num_bg"]];
+  [self.cotainerView setContentSize:CGSizeMake(self.cotainerView.frame.size.width , self.cotainerView.frame.size.height + 1)];
+  
+  
+  ODRefreshControl *refreshControl = [[ODRefreshControl alloc] initInScrollView:self.cotainerView];
+  refreshControl.tintColor = [UIColor colorWithRed:150.0/255.0
+                                             green:11.0/255.0
+                                              blue:15.0/255.0
+                                             alpha:1.0];
+  [refreshControl addTarget:self action:@selector(dropViewDidBeginRefreshing:) forControlEvents:UIControlEventValueChanged];
+
+
+}
+
+- (void)dropViewDidBeginRefreshing:(ODRefreshControl *)refreshControl
+{
+  double delayInSeconds = 3.0;
+  dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+  dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    [refreshControl endRefreshing];
+  });
 }
 
 - (void)didReceiveMemoryWarning

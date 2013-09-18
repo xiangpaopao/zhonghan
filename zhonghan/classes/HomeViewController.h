@@ -10,6 +10,9 @@
 
 @interface HomeViewController : UIViewController
 
+@property (nonatomic, strong) IBOutlet UIScrollView *cotainerView;
+@property (nonatomic, strong) IBOutlet UILabel *msgLabel;
+
 -(IBAction)newsAction:(id)sender;
 -(IBAction)booksAction:(id)sender;
 -(IBAction)schoolAction:(id)sender;

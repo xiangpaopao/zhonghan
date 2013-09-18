@@ -54,7 +54,7 @@
       
       
       _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, frame.size.height-28, frame.size.width, 28)];
-      _titleLabel.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.7];
+      _titleLabel.backgroundColor = [UIColor colorWithRed:245.0/255.0 green:244.0/255.0 blue:235.0/255.0 alpha:0.8];
       _titleLabel.textColor = [UIColor blackColor];
       _titleLabel.font = [UIFont systemFontOfSize:13.0];
       _titleLabel.text = @"  哈哈哈哈哈哈哈哈";

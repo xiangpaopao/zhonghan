@@ -45,16 +45,23 @@
 //  headerView.pageControl.currentPageIndicatorTintColor = [UIColor grayColor];
   self.listView.tableHeaderView = headerView;
   
-  UIView *test = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, self.view.frame.size.height)];
-  test.backgroundColor = [UIColor redColor];
+  UIImageView *test = [[UIImageView alloc] init];
+  [test setImage:[UIImage imageNamed:@"news_banner"]];
+  test.contentMode = UIViewContentModeScaleAspectFill;
+  test.clipsToBounds = YES;
+  test.frame = CGRectMake(0, 0, ScreenWidth, 180);
   [headerView addPage:test];
-  
-  test = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, self.view.frame.size.height)];
-  test.backgroundColor = [UIColor blueColor];
+  test = [[UIImageView alloc] init];
+  [test setImage:[UIImage imageNamed:@"news_banner"]];
+  test.contentMode = UIViewContentModeScaleAspectFill;
+  test.clipsToBounds = YES;
+  test.frame = CGRectMake(0, 0, ScreenWidth, 180);
   [headerView addPage:test];
-  
-  test = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, self.view.frame.size.height)];
-  test.backgroundColor = [UIColor greenColor];
+  test = [[UIImageView alloc] init];
+  [test setImage:[UIImage imageNamed:@"news_banner"]];
+  test.contentMode = UIViewContentModeScaleAspectFill;
+  test.clipsToBounds = YES;
+  test.frame = CGRectMake(0, 0, ScreenWidth, 180);
   [headerView addPage:test];
   
 }
@@ -77,7 +84,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-  return 86.0;
+  return 80.0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -89,8 +96,13 @@
     NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
     cell = [topLevelObjects objectAtIndex:0];
   }
-
   
+
+  cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+  cell.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:232.0/255.0 blue:223.0/255.0 alpha:1.0];
+  
+  [cell.ifNewView setHidden:NO];
+  [cell.imageView setImage:[UIImage imageNamed:@"news_thumb"]];
   return cell;
 }
 

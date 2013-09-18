@@ -16,7 +16,7 @@
 @property (nonatomic, strong) IBOutlet UITextView *infoView;
 @property (nonatomic, strong) IBOutlet UILabel *ifNewLabel;
 
-
+-(void)configure;
 -(IBAction)readAction:(id)sender;
 
 

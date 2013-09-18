@@ -27,7 +27,14 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+//  UIImageView* navBg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 44)];
+//  [navBg setImage:[UIImage imageNamed:@"tobbar_bg"]];
   [self.navigationBar setFrame:CGRectMake(0, 0, ScreenWidth, 44)];
+//  
+//  [self.navigationBar addSubview:navBg];
+  
+  [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"tobbar_bg"]
+                           forBarMetrics:UIBarMetricsDefault];
 }
 
 - (void)didReceiveMemoryWarning

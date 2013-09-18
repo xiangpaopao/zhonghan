@@ -14,6 +14,8 @@
 @property (nonatomic, strong) IBOutlet UILabel *titleLabel;
 @property (nonatomic, strong) IBOutlet UILabel *dateLabel;
 @property (nonatomic, strong) IBOutlet UILabel *infoLabel;
-@property (nonatomic, strong) IBOutlet UILabel *ifNewLabel;
+@property (nonatomic, strong) IBOutlet UIImageView *ifNewView;
+
+-(void)configure;
 
 @end
