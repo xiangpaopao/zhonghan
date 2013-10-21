@@ -7,14 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WithBackBtnViewController.h"
 
-@interface BooksShowViewController : UIViewController
+@interface BooksShowViewController : WithBackBtnViewController
 
 @property (nonatomic, strong) IBOutlet UIImageView *imageView;
 @property (nonatomic, strong) IBOutlet UILabel *titleLabel;
 @property (nonatomic, strong) IBOutlet UILabel *dateLabel;
 @property (nonatomic, strong) IBOutlet UITextView *infoView;
 @property (nonatomic, strong) IBOutlet UILabel *ifNewLabel;
+@property (nonatomic, strong) IBOutlet UIView *infoBgView;
+
 
 -(void)configure;
 -(IBAction)readAction:(id)sender;

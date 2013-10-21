@@ -27,29 +27,36 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-  [self setupHomeMenuButton];
+     
+    for (UIView *view in [[[self.webView subviews] objectAtIndex:0] subviews]) {
+        if ([view isKindOfClass:[UIImageView class]]) view.hidden = YES;
+    }
+    self.webView.backgroundColor = [UIColor colorWithRed:245.0/255.0
+                                                   green:244.0/255.0
+                                                    blue:235.0/255.0
+                                                   alpha:1.0];
+    self.webView.opaque = NO;
+
 }
 
--(void)setupHomeMenuButton{
-  UIImage* image= [UIImage imageNamed:@"back_btn"];
-  UIImage* imageOn= [UIImage imageNamed:@"back_btn_on"];
-  UIButton* leftButton= [[UIButton alloc] initWithFrame:CGRectMake(0, -1, image.size.width, image.size.height)];
-  [leftButton setBackgroundImage:image forState:UIControlStateNormal];
-  [leftButton setBackgroundImage:imageOn forState:UIControlStateHighlighted];
-  [leftButton addTarget:self action:@selector(HomeButtonPress:) forControlEvents:UIControlEventTouchUpInside];
-  UIBarButtonItem* leftDrawerButton = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-  [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
-}
 
-#pragma mark - Button Handlers
--(void)HomeButtonPress:(id)sender{
-  [self.navigationController popViewControllerAnimated:YES];
-  
-}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    
+    NSURL *url=[NSURL URLWithString:self.webStr];
+    NSURLRequest *request=[NSURLRequest requestWithURL:url];
+    
+    
+//    NSString *filePath = [[NSBundle mainBundle]pathForResource:self.webStr ofType:@"html"];
+//    NSURL *url = [NSURL fileURLWithPath:filePath];
+//    NSURLRequest* request = [NSURLRequest requestWithURL:url];
+    [self.webView loadRequest:request];
+}
 @end

@@ -24,17 +24,30 @@
 
 @implementation MHCustomTabBarController
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    
     _viewControllers = [NSMutableDictionary dictionary];
+    [self buildUI];
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
+-(void) buildUI
+{
+    [self.container setFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 20 -48)];
+    if(IOS_VERSION >= 7)
+    {
+        [self.container setFrame:CGRectMake(0, 10, ScreenWidth, ScreenHeight -20 -48)];
+    }
+}
 -(void) viewWillAppear:(BOOL)animated
 {
+    
     [self.presentingViewController beginAppearanceTransition: YES animated: animated];
 }
 
@@ -61,44 +74,33 @@
     }
 }
 
-
 #pragma mark - Rotation
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     for (UIViewController *vc  in self.childViewControllers) {
         [vc.view setFrame:self.container.bounds];
     }
-    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
 }
-
-
 #pragma mark - Segue
-
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-   
     _oldViewController = _destinationViewController;
-    
     //if view controller isn't already contained in the viewControllers-Dictionary
     if (![[_viewControllers allKeys] containsObject:segue.identifier]) {
         [_viewControllers setObject:segue.destinationViewController forKey:segue.identifier];
     }
-    
     for (UIView *subview in _buttonView.subviews) {
         if ([subview isKindOfClass:[UIButton class]]) {
             [((UIButton *)subview) setSelected:NO];
         }
     }
-        
     UIButton *button = (UIButton *)sender;
     [button setSelected:YES];
     self.destinationIdentifier = segue.identifier;
     self.destinationViewController = [_viewControllers objectForKey:self.destinationIdentifier];
-
-    
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
@@ -106,12 +108,10 @@
         //Dont perform segue, if visible ViewController is already the destination ViewController
         return NO;
     }
-    
     return YES;
 }
 
 #pragma mark - Memory Warning
-
 - (void)didReceiveMemoryWarning {
     [[self.viewControllers allKeys] enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop) {
         if (![self.destinationIdentifier isEqualToString:key]) {
@@ -119,7 +119,5 @@
         }
     }];
 }
-
-
 
 @end

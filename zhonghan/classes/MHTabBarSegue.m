@@ -39,7 +39,7 @@
     [tabBarViewController.oldViewController removeFromParentViewController];
   }
   
-  navController.view.frame = tabBarViewController.container.bounds;
+  navController.view.frame = tabBarViewController.container.frame;
   [tabBarViewController addChildViewController:navController];
   [tabBarViewController.container addSubview:navController.view];
   [navController didMoveToParentViewController:tabBarViewController];

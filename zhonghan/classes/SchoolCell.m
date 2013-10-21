@@ -38,18 +38,29 @@ alpha:1.0]
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 
--(void)initWithSchool
+-(void)configure
 {
-  self.typeLabel.layer.cornerRadius = 5;
-  self.typeLabel.layer.masksToBounds = YES;
-  self.typeLabel.layer.borderWidth = 1;
-  self.typeLabel.layer.borderColor = discussionColor.CGColor;
-  
-  
+    
+    self.backgroundView = [[UIView alloc] initWithFrame:self.frame];
+    self.backgroundView.backgroundColor = [UIColor colorWithRed:244.0/255.0 green:244.0/255.0 blue:234.0/255.0 alpha:1.0];
+    self.selectedBackgroundView = [[UIView alloc] initWithFrame:self.frame];
+    self.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:232.0/255.0 blue:223.0/255.0 alpha:1.0];
+    
+    [self.ifNewView setHidden:NO];
+    
+    
+    
+    
+    self.typeLabel.layer.cornerRadius = 5;
+    self.typeLabel.layer.masksToBounds = YES;
+    self.typeLabel.layer.borderWidth = 1;
+    self.typeLabel.layer.borderColor = discussionColor.CGColor;
+    
+    
 }
 
 

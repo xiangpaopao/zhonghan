@@ -169,6 +169,7 @@ static inline CGFloat lerp(CGFloat a, CGFloat b, CGFloat p)
         if (!_ignoreInset) {
             self.originalContentInset = [[change objectForKey:@"new"] UIEdgeInsetsValue];
             self.frame = CGRectMake(0, -(kTotalViewHeight + self.scrollView.contentInset.top), self.scrollView.frame.size.width, kTotalViewHeight);
+            
         }
         return;
     }
@@ -179,6 +180,8 @@ static inline CGFloat lerp(CGFloat a, CGFloat b, CGFloat p)
 
     CGFloat offset = [[change objectForKey:@"new"] CGPointValue].y + self.originalContentInset.top;
     
+    
+    
     if (_refreshing) {
         if (offset != 0) {
             // Keep thing pinned at the top
@@ -186,6 +189,7 @@ static inline CGFloat lerp(CGFloat a, CGFloat b, CGFloat p)
             [CATransaction begin];
             [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
             _shapeLayer.position = CGPointMake(0, kMaxDistance + offset + kOpenedViewHeight);
+           
             [CATransaction commit];
 
             _activity.center = CGPointMake(floor(self.frame.size.width / 2), MIN(offset + self.frame.size.height + floor(kOpenedViewHeight / 2), self.frame.size.height - kOpenedViewHeight/ 2));
@@ -227,6 +231,7 @@ static inline CGFloat lerp(CGFloat a, CGFloat b, CGFloat p)
         return;
     } else {
         // Check if we can trigger a new refresh and if we can draw the control
+        [_shapeLayer setOpacity:-offset * 0.011];
         BOOL dontDraw = NO;
         if (!_canRefresh) {
             if (offset >= 0) {

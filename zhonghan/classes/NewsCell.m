@@ -7,6 +7,7 @@
 //
 
 #import "NewsCell.h"
+#import "UIImageView+AFNetworking.h"
 
 @implementation NewsCell
 
@@ -24,6 +25,28 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)configureWithNews:(News *)news{
+    self.backgroundView = [[UIView alloc] initWithFrame:self.frame];
+    self.backgroundView.backgroundColor = [UIColor colorWithRed:244.0/255.0 green:244.0/255.0 blue:234.0/255.0 alpha:1.0];
+    self.selectedBackgroundView = [[UIView alloc] initWithFrame:self.frame];
+    self.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:232.0/255.0 blue:223.0/255.0 alpha:1.0];
+    
+    [self.titleLabel setText:news.title];
+    [self.dateLabel setText:news.publish_time];
+    
+    [self.ifNewView setHidden:news.ifRead];
+    
+    //UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:news.thumb_pic]]];
+    //[self.thumbView setImage:image];
+    
+    [self.thumbView setImageWithURL:[NSURL URLWithString:news.thumb_pic] placeholderImage:[UIImage imageNamed:@"news_thumb_default"]];
+    self.thumbView.clipsToBounds=YES;
+    //[self.thumbView setFrame:CGRectMake(0, 0, 44, 44)];
+    self.thumbView.contentMode=UIViewContentModeScaleAspectFill;
+
+    
 }
 
 @end

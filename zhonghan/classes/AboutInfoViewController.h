@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WithBackBtnViewController.h"
 
-@interface AboutInfoViewController : UIViewController
+@interface AboutInfoViewController : WithBackBtnViewController
+
+@property(nonatomic, strong)IBOutlet UIWebView *webView;
+@property (nonatomic, strong) NSString* webStr;
 
 @end

@@ -27,6 +27,24 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"book_detail_info_bg"]];
+    
+    self.webView.backgroundColor = [UIColor clearColor];
+    self.webView.opaque = NO;
+    for (UIView *view in [[[self.webView subviews] objectAtIndex:0] subviews]) {
+        if ([view isKindOfClass:[UIImageView class]]) view.hidden = YES;
+    }
+    [self.webView setFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-44-48-20)];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    NSString *filePath = [[NSBundle mainBundle]pathForResource:self.webStr ofType:@"html"];
+    NSURL *url = [NSURL fileURLWithPath:filePath];
+    NSURLRequest* request = [NSURLRequest requestWithURL:url];
+    [self.webView loadRequest:request];
 }
 
 - (void)didReceiveMemoryWarning

@@ -10,6 +10,7 @@
 
 @interface HomeViewController : UIViewController
 
+@property (nonatomic, strong) IBOutlet UIImageView *bgView;
 @property (nonatomic, strong) IBOutlet UIScrollView *cotainerView;
 @property (nonatomic, strong) IBOutlet UILabel *msgLabel;
 

@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TGJSBridge.h"
 
-@interface AboutViewController : UIViewController
 
--(IBAction)chinaAction:(id)sender;
--(IBAction)internationalAction:(id)sender;
+@interface AboutViewController : UIViewController<TGJSBridgeDelegate>
+
+@property (nonatomic, strong)IBOutlet UIWebView *webView;
+
 
 @end

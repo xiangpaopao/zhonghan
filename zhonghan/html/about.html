@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+<title>中翰</title>
+<style>
+* {margin: 0;padding: 0;text-decoration: none;-webkit-user-select: none;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);}
+body {font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;margin: 0;font-size: 13px;color: #fff;line-height: 1.6em;background:transparent;padding: 12px;}
+.wp{max-width: 400px; margin: 0 auto;}
+h4{font-size: 14px; font-weight: normal; line-height: 3em; }
+#intro{border-bottom: 1px dashed #877500; padding-bottom: 15px;}
+#info{border-bottom: 1px dashed #877500; padding: 10px 0; line-height: 1.7em}
+#china{width: 100%;height: 40px; display: block;text-align: center;font-size: 15px; color: #fff;line-height: 40px;
+background: -webkit-gradient(linear,0% 0%, 0% 100%, from(#1C99DC), to(#0378B1));-webkit-border-radius: 4px;border: 1px soid #00588e;
+-webkit-box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.5), 0px 1px 1px rgba(0, 0, 0, 0.2);margin-bottom: 18px;}
+#china:active{background: -webkit-gradient(linear,0% 0%, 0% 100%, from(#1A5474), to(#0378B1));}
+#international{width: 100%;height: 40px; display: block;text-align: center;font-size: 15px; color: #fff;line-height: 40px;
+background: -webkit-gradient(linear,0% 0%, 0% 100%, from(#ff8245), to(#dd4f10));-webkit-border-radius: 4px;border: 1px soid #b93100;
+-webkit-box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.5), 0px 1px 1px rgba(0, 0, 0, 0.2);}
+#international:active{background: -webkit-gradient(linear,0% 0%, 0% 100%, from(#B1420C), to(#dd4f10));}
+.lk{color: #fff; text-decoration: underline;}
+</style>
+</head>
+<body>
+<div class="wp">
+<div id="intro">中国转让定价服务联盟应新经济而生，凭知识创造财富，智力就是资本的信念，由一群学识深厚、经验丰富、创新求实的博士、硕士、高级工程师、高级经济师等专业技术人士组成。创新求实的博士、硕士、高级工程师、高级经济师等专业技术人士组成。</div>
+<div id="info">
+<div>电话：0123456789</div>
+<div>官⺴⽹网：<a href="http://www.cntransferpricing.com" class="lk">www.cntransferpricing.com</a></div>
+<div>地址：xxxxxxxxxxxxx</div></div>
+<h4>其他机构信息：</h4>
+<a id="china" href="javascript:china();" />中翰中国</a>
+<a id="international" href="javascript:international();" />中翰国际</a>
+</div>
+<script src="./TGJSBridge.bundle/TGJSBridge.js"></script>
+<script>
+function china()
+{
+    jsBridge.postNotification('oc',{message:'about_china'});
+}
+function international()
+{
+    jsBridge.postNotification('oc',{message:'about_international'});
+}
+</script> 
+</body>
+</html>
+

@@ -28,13 +28,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-  [self hideTabBar];
+  //[self hideTabBar];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
   [super viewWillDisappear:animated];
-  [self showTabBar];
+  //[self showTabBar];
 }
 
 - (void)viewDidLoad
@@ -42,18 +42,30 @@
   [super viewDidLoad];
 	// Do any additional setup after loading the view.
   
-  self.msgLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"home_num_bg"]];
-  [self.cotainerView setContentSize:CGSizeMake(self.cotainerView.frame.size.width , self.cotainerView.frame.size.height + 1)];
-  
-  
-  ODRefreshControl *refreshControl = [[ODRefreshControl alloc] initInScrollView:self.cotainerView];
-  refreshControl.tintColor = [UIColor colorWithRed:150.0/255.0
-                                             green:11.0/255.0
-                                              blue:15.0/255.0
-                                             alpha:1.0];
-  [refreshControl addTarget:self action:@selector(dropViewDidBeginRefreshing:) forControlEvents:UIControlEventValueChanged];
+    [self buildUI];
+}
 
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
 
+-(void) buildUI
+{
+    self.msgLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"home_num_bg"]];
+    [self.cotainerView setContentSize:CGSizeMake(self.cotainerView.frame.size.width , self.cotainerView.frame.size.height + 1)];
+    ODRefreshControl *refreshControl = [[ODRefreshControl alloc] initInScrollView:self.cotainerView];
+    refreshControl.tintColor = [UIColor colorWithRed:150.0/255.0
+                                               green:11.0/255.0
+                                                blue:15.0/255.0
+                                               alpha:1.0];
+    [refreshControl addTarget:self action:@selector(dropViewDidBeginRefreshing:) forControlEvents:UIControlEventValueChanged];
+    if(IS_IPHONE5){
+        
+        [self.bgView setFrame:CGRectMake(0, 0, self.bgView.frame.size.width, self.bgView.frame.size.height)];
+        
+        [self.cotainerView setFrame:CGRectMake(0, 100, self.cotainerView.frame.size.width, self.cotainerView.frame.size.height)];
+    }
 }
 
 - (void)dropViewDidBeginRefreshing:(ODRefreshControl *)refreshControl

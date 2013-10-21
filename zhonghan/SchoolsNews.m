@@ -17,7 +17,6 @@
 @synthesize info;
 @synthesize ifNew;
 
-
 - (id)initWithParameters:(int)ID
                    title:(NSString *)newTitle
                     date:(NSString *)newDate

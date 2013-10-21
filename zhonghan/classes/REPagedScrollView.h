@@ -29,13 +29,14 @@
 
 @property (strong, readonly, nonatomic) UIScrollView *scrollView;
 @property (strong, readonly, nonatomic) UIPageControl *pageControl;
+@property (strong, readonly, nonatomic) NSMutableArray *titles;
 @property (strong, readonly, nonatomic) UILabel *titleLabel;
 @property (assign, readonly, nonatomic) NSUInteger numberOfPages;
 @property (strong, readonly, nonatomic) NSArray *pages;
 @property (weak, readwrite, nonatomic) id<UIScrollViewDelegate> delegate;
 
 
-- (void)addPage:(UIView *)pageView;
+- (void)addPage:(UIView *)pageView withTitle:(NSString *)title;
 - (void)scrollToPageWithIndex:(NSUInteger)pageIndex animated:(BOOL)animated;
 
 @end

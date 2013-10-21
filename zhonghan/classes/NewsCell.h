@@ -7,12 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "News.h"
 
 @interface NewsCell : UITableViewCell
 
-@property (nonatomic, strong) IBOutlet UIImageView *imageView;
+@property (nonatomic, strong) IBOutlet UIImageView *thumbView;
 @property (nonatomic, strong) IBOutlet UILabel *titleLabel;
 @property (nonatomic, strong) IBOutlet UILabel *dateLabel;
 @property (nonatomic, strong) IBOutlet UIImageView *ifNewView;
 
+
+- (void)configureWithNews:(News *)news;
+  
+  
 @end

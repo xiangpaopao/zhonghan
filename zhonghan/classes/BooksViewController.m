@@ -34,35 +34,37 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-  return 1;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section {
-  return 5;
+    return 5;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  static NSString *CellIdentifier = @"BooksCell";
-  BooksCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-  
-  if (cell == nil) {
-    NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
-    cell = [topLevelObjects objectAtIndex:0];
-  }
-
-  [cell configure];
-  
-  return cell;
+    static NSString *CellIdentifier = @"BooksCell";
+    BooksCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (cell == nil) {
+        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
+        cell = [topLevelObjects objectAtIndex:0];
+    }
+    
+    [cell configure];
+    NSLog(@"hehehe");
+    
+    return cell;
 }
 
 
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  BooksShowViewController *showView = [self.storyboard instantiateViewControllerWithIdentifier:@"BooksShowViewController"];
-  [self.navigationController pushViewController:showView animated:YES];
+    BooksShowViewController *showView = [self.storyboard instantiateViewControllerWithIdentifier:@"BooksShowViewController"];
+    [self.navigationController pushViewController:showView animated:YES];
+    [tableView  deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 

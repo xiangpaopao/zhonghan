@@ -16,6 +16,6 @@
 @property (nonatomic, strong) IBOutlet UILabel *infoLabel;
 @property (nonatomic, strong) IBOutlet UIImageView *ifNewView;
 
--(void)initWithSchool;
+-(void)configure;
 
 @end
