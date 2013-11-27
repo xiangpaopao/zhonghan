@@ -13,7 +13,6 @@
 
 #import "AFJSONRequestOperation.h"
 
-static NSString * const kAFAppDotNetAPIBaseURLString = @"http://192.168.1.247:8860/";
 
 @implementation AppAPIClient
 

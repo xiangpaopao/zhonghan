@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TGJSBridge.h"
 
 
-@interface AboutViewController : UIViewController<TGJSBridgeDelegate>
+@interface AboutViewController : UIViewController<UIWebViewDelegate>
 
 @property (nonatomic, strong)IBOutlet UIWebView *webView;
+@property (nonatomic, strong)UIButton *leftButton;
 
 
 @end

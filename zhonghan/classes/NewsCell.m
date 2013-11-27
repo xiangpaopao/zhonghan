@@ -36,7 +36,14 @@
     [self.titleLabel setText:news.title];
     [self.dateLabel setText:news.publish_time];
     
-    [self.ifNewView setHidden:news.ifRead];
+    
+    //当天的且未读 则显示new
+    if ((news.ifNew==YES) && (news.ifRead==NO)) {
+        [self.ifNewView setHidden:NO];
+    }else{
+        [self.ifNewView setHidden:YES];
+    }
+    NSLog(@"cell %i readed is %i",news.ID,news.ifRead);
     
     //UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:news.thumb_pic]]];
     //[self.thumbView setImage:image];
@@ -46,7 +53,11 @@
     //[self.thumbView setFrame:CGRectMake(0, 0, 44, 44)];
     self.thumbView.contentMode=UIViewContentModeScaleAspectFill;
 
-    
+    if (!news.haveVideo) {
+        [self.haveVideo setHidden:YES];
+    }else{
+        [self.haveVideo setHidden:NO];
+    }
 }
 
 @end

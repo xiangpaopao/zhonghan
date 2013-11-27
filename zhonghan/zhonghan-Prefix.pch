@@ -16,10 +16,13 @@
 #define ScreenHeight [UIScreen mainScreen].bounds.size.height
 #define ScreenWidth [UIScreen mainScreen].bounds.size.width
 
-#define PAGE_SIZE @"10"
+#define kApp_PAGE_SIZE @"8"
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
 
 //获取系统版本
 #define IOS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
 #define CurrentSystemVersion [[UIDevice currentDevice] systemVersion]
+
+#define kAFAppDotNetAPIBaseURLString @"http://emms.airad.com/"
+//#define kAFAppDotNetAPIBaseURLString @"http://192.168.1.7:8080/"

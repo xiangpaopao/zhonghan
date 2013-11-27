@@ -35,69 +35,88 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-  self = [super initWithFrame:frame];
-  if (self) {
-    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
-    _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    _scrollView.pagingEnabled = YES;
-    _scrollView.showsHorizontalScrollIndicator = NO;
-    _scrollView.showsVerticalScrollIndicator = NO;
-    _scrollView.delegate = self;
-    [self addSubview:_scrollView];
-    
-    
-    
-    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, frame.size.height-28, frame.size.width, 28)];
-    _titleLabel.backgroundColor = [UIColor colorWithRed:245.0/255.0 green:244.0/255.0 blue:235.0/255.0 alpha:0.8];
-    _titleLabel.textColor = [UIColor blackColor];
-    _titleLabel.font = [UIFont systemFontOfSize:13.0];
-    [self addSubview:_titleLabel];
-    
-    
-    _pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(240, frame.size.height - 28, 80, 28)];
-    _pageControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-    [_pageControl addTarget:self action:@selector(pageControlPageDidChange:) forControlEvents:UIControlEventValueChanged];
-    [self addSubview:_pageControl];
-    
-    _pageViews = [[NSMutableArray alloc] init];
-    
-      _titles = [NSMutableArray arrayWithCapacity:5];
-    
-    //
-  }
-  return self;
+    self = [super initWithFrame:frame];
+    if (self) {
+        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        _scrollView.pagingEnabled = YES;
+        _scrollView.showsHorizontalScrollIndicator = NO;
+        _scrollView.showsVerticalScrollIndicator = NO;
+        _scrollView.delegate = self;
+        [self addSubview:_scrollView];
+        
+        UIView *titleBg = [[UIView alloc] initWithFrame:CGRectMake(0, frame.size.height-28, frame.size.width, 28)];
+        titleBg.backgroundColor = [UIColor colorWithRed:245.0/255.0 green:244.0/255.0 blue:235.0/255.0 alpha:0.8];
+        [self addSubview:titleBg];
+        
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, frame.size.height-28, frame.size.width-50, 28)];
+        _titleLabel.backgroundColor = [UIColor clearColor];
+        _titleLabel.textColor = [UIColor blackColor];
+        _titleLabel.font = [UIFont systemFontOfSize:13.0];
+        [self addSubview:_titleLabel];
+        
+        
+       
+
+        
+        
+        _pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(246, frame.size.height - 28, 80, 28)];
+        _pageControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+        [_pageControl addTarget:self action:@selector(pageControlPageDidChange:) forControlEvents:UIControlEventValueChanged];
+        [self addSubview:_pageControl];
+        
+        _pageViews = [[NSMutableArray alloc] init];
+        
+        _titles = [NSMutableArray arrayWithCapacity:5];
+        
+        //
+    }
+    return self;
 }
 
 
 - (void)addPage:(UIView *)page withTitle:(NSString *)title
 {
-  UIView *pageContainerView = [[UIView alloc] initWithFrame:CGRectMake(self.numberOfPages * _scrollView.frame.size.width, 0, _scrollView.frame.size.width, _scrollView.frame.size.height)];
-  [pageContainerView addSubview:page];
-  [_scrollView addSubview:pageContainerView];
-  [_pageViews addObject:pageContainerView];
-
+    UIView *pageContainerView = [[UIView alloc] initWithFrame:CGRectMake(self.numberOfPages * _scrollView.frame.size.width, 0, _scrollView.frame.size.width, _scrollView.frame.size.height)];
+    [pageContainerView addSubview:page];
+    [_scrollView addSubview:pageContainerView];
+    [_pageViews addObject:pageContainerView];
+    
+    [_titleLabel setText:[NSString stringWithFormat:@" %@",title]];
     [_titles addObject:[NSString stringWithFormat:@" %@",title]];
     
-  _scrollView.contentSize = CGSizeMake(_scrollView.frame.size.width * self.numberOfPages, _scrollView.frame.size.height);
-  _pageControl.numberOfPages = self.numberOfPages;
+    _scrollView.contentSize = CGSizeMake(_scrollView.frame.size.width * self.numberOfPages, _scrollView.frame.size.height);
+    _pageControl.numberOfPages = self.numberOfPages;
+}
+
+- (void) removeAllPages
+{
+    NSArray *viewsToRemove = [_scrollView subviews];
+    for (UIView *v in viewsToRemove) {
+        [v removeFromSuperview];
+    }
+    [_pageViews removeAllObjects];
+    [_titles removeAllObjects];
+    _pageControl.numberOfPages = 0;
+    _scrollView.contentSize = CGSizeMake(_scrollView.frame.size.width * self.numberOfPages, _scrollView.frame.size.height);
 }
 
 - (void)scrollToPageWithIndex:(NSUInteger)pageIndex animated:(BOOL)animated
 {
-  CGRect frame = _scrollView.frame;
-  frame.origin.x = frame.size.width * pageIndex;
-  frame.origin.y = 0;
-  [_scrollView scrollRectToVisible:frame animated:animated];
+    CGRect frame = _scrollView.frame;
+    frame.origin.x = frame.size.width * pageIndex;
+    frame.origin.y = 0;
+    [_scrollView scrollRectToVisible:frame animated:animated];
 }
 
 - (NSArray *)pages
 {
-  return _pageViews;
+    return _pageViews;
 }
 
 - (NSUInteger)numberOfPages
 {
-  return _pageViews.count;
+    return _pageViews.count;
 }
 
 #pragma mark -
@@ -105,7 +124,7 @@
 
 - (void)pageControlPageDidChange:(UIPageControl *)pageControl
 {
-  [self scrollToPageWithIndex:pageControl.currentPage animated:YES];
+    [self scrollToPageWithIndex:pageControl.currentPage animated:YES];
 }
 
 #pragma mark -
@@ -113,82 +132,82 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-  CGFloat pageWidth = scrollView.frame.size.width;
-  int page = floor((scrollView.contentOffset.x - pageWidth / 2.0) / pageWidth) + 1;
+    CGFloat pageWidth = scrollView.frame.size.width;
+    int page = floor((scrollView.contentOffset.x - pageWidth / 2.0) / pageWidth) + 1;
 	_pageControl.currentPage = page;
     [_titleLabel setText:[_titles objectAtIndex:page]];
-  if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(scrollViewDidScroll:)])
-    [_delegate scrollViewDidScroll:scrollView];
+    if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(scrollViewDidScroll:)])
+        [_delegate scrollViewDidScroll:scrollView];
 }
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView
 {
-  if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(scrollViewDidZoom:)])
-    [_delegate scrollViewDidZoom:scrollView];
+    if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(scrollViewDidZoom:)])
+        [_delegate scrollViewDidZoom:scrollView];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-  if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(scrollViewWillBeginDragging:)])
-    [_delegate scrollViewWillBeginDragging:scrollView];
+    if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(scrollViewWillBeginDragging:)])
+        [_delegate scrollViewWillBeginDragging:scrollView];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-  if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(scrollViewDidEndDragging:willDecelerate:)])
-    [_delegate scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
+    if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(scrollViewDidEndDragging:willDecelerate:)])
+        [_delegate scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
 }
 
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
 {
-  if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(scrollViewWillBeginDecelerating:)])
-    [_delegate scrollViewWillBeginDecelerating:scrollView];
+    if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(scrollViewWillBeginDecelerating:)])
+        [_delegate scrollViewWillBeginDecelerating:scrollView];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-  if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(scrollViewDidEndDecelerating:)])
-    [_delegate scrollViewDidEndDecelerating:scrollView];
+    if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(scrollViewDidEndDecelerating:)])
+        [_delegate scrollViewDidEndDecelerating:scrollView];
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
-  if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(scrollViewDidEndScrollingAnimation:)])
-    [_delegate scrollViewDidEndScrollingAnimation:scrollView];
+    if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(scrollViewDidEndScrollingAnimation:)])
+        [_delegate scrollViewDidEndScrollingAnimation:scrollView];
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
-  if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(viewForZoomingInScrollView:)])
-    return [_delegate viewForZoomingInScrollView:scrollView];
-  
-  return nil;
+    if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(viewForZoomingInScrollView:)])
+        return [_delegate viewForZoomingInScrollView:scrollView];
+    
+    return nil;
 }
 
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view
 {
-  if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(scrollViewWillBeginZooming:withView:)])
-    [_delegate scrollViewWillBeginZooming:scrollView withView:view];
+    if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(scrollViewWillBeginZooming:withView:)])
+        [_delegate scrollViewWillBeginZooming:scrollView withView:view];
 }
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(float)scale;
 {
-  if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(scrollViewDidEndZooming:withView:atScale:)])
-    [_delegate scrollViewDidEndZooming:scrollView withView:view atScale:scale];
+    if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(scrollViewDidEndZooming:withView:atScale:)])
+        [_delegate scrollViewDidEndZooming:scrollView withView:view atScale:scale];
 }
 
 - (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView
 {
-  if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(scrollViewShouldScrollToTop:)])
-    return [_delegate scrollViewShouldScrollToTop:scrollView];
-  
-  return YES;
+    if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(scrollViewShouldScrollToTop:)])
+        return [_delegate scrollViewShouldScrollToTop:scrollView];
+    
+    return YES;
 }
 
 - (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView
 {
-  if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(scrollViewDidScrollToTop:)])
-    [_delegate scrollViewDidScrollToTop:scrollView];
+    if ([_delegate conformsToProtocol:@protocol(UIScrollViewDelegate)] && [_delegate respondsToSelector:@selector(scrollViewDidScrollToTop:)])
+        [_delegate scrollViewDidScrollToTop:scrollView];
 }
 
 @end

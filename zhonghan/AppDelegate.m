@@ -8,7 +8,10 @@
 
 #import "AppDelegate.h"
 //#import "DCIntrospect.h"
+#import "UncaughtExceptionHandler.h"
 #import "RavenClient.h"
+#import "AppAPIClient.h"
+
 
 @implementation AppDelegate
 
@@ -16,18 +19,16 @@
 {
     // Override point for customization after application launch.
     
-    
-    [self.window makeKeyAndVisible];
 //	[[DCIntrospect sharedIntrospector] start];
 //    
-//    
-//    [RavenClient clientWithDSN:@"http://f5328160d7cd47658736678501e3ec25:3ae9f0c370454bcfb881effadcc09356@sentry.airad.com/11"];
-//    [[RavenClient sharedClient] setupExceptionHandler];
-    
+    [RavenClient clientWithDSN:@"http://aa32bb05ce8a449dbc69d9d339ab1144:c2162354dd9144089351d82f6e583dd1@sentry.airad.com/11"];
+    [[RavenClient sharedClient] setupExceptionHandler];
     //推送的形式：标记，声音，提示
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeBadge |UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert];
-
     
+    //InstallUncaughtExceptionHandler();
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeBadge |UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert];
+    
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
@@ -57,19 +58,35 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
-
 //push
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)pToken {
-    NSLog(@"regisger success:%@",pToken);
+    
     //注册成功，将deviceToken保存到应用服务器数据库中
+    NSString *pTokenStr = [[[NSString stringWithFormat:@"%@", pToken]
+                            stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]]
+                           stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"regisger success:%@",pTokenStr);
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: pTokenStr, @"token", nil];
+    
+    [[AppAPIClient sharedClient] postPath:@"/api/zhonghan/req_token" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+        NSLog(@"Request Token %@",JSON);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
+    
 }
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
     // 处理推送消息
     NSLog(@"userinfo:%@",userInfo);
     
-    NSLog(@"收到推送消息:%@",[[userInfo objectForKey:@"aps"] objectForKey:@"alert"]);
+   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getUserProfileSuccess:) name:@"Notification_GetUserProfileSuccess" object:nil];
+    
+    NSDictionary *postInfo = [NSDictionary dictionaryWithObject:[userInfo objectForKey:@"zhonghan_model"] forKey:@"model"];
+    [[NSNotificationCenter defaultCenter] postNotificationName: @"TestNotification" object:nil userInfo:postInfo];
 }
+
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     NSLog(@"Registfail%@",error);
 }

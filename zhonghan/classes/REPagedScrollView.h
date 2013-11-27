@@ -37,6 +37,7 @@
 
 
 - (void)addPage:(UIView *)pageView withTitle:(NSString *)title;
+- (void)removeAllPages;
 - (void)scrollToPageWithIndex:(NSUInteger)pageIndex animated:(BOOL)animated;
 
 @end

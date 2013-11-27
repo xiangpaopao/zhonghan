@@ -15,5 +15,7 @@
 
 @property (nonatomic, strong) IBOutlet UITableView *listView;
 
+@property (nonatomic, strong) REPagedScrollView *headerView;
+
 
 @end

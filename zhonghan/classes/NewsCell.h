@@ -15,6 +15,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *titleLabel;
 @property (nonatomic, strong) IBOutlet UILabel *dateLabel;
 @property (nonatomic, strong) IBOutlet UIImageView *ifNewView;
+@property (nonatomic, strong) IBOutlet UIImageView *haveVideo;
 
 
 - (void)configureWithNews:(News *)news;

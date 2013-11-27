@@ -8,9 +8,13 @@
 
 #import "BooksShowViewController.h"
 #import "WebShowViewController.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface BooksShowViewController ()
-
+{
+    
+    NSString *_webStr;
+}
 @end
 
 @implementation BooksShowViewController
@@ -28,18 +32,39 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-  
+  self.title=@"杂志详情";
   self.infoBgView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"book_detail_info_bg"]];
-  
-  [self configure];
+    
+    [self configure];
 }
 
 -(void)configure
 {
-  [self.imageView setImage:[UIImage imageNamed:@"book_thumb"]];
-  [self.titleLabel setText:@"2013年第二三期"];
-  [self.dateLabel setText:@"2013.05.12更新"];
+    [self.postImageView setImageWithURL:[NSURL URLWithString:self.book.thumb_pic] placeholderImage:[UIImage imageNamed:@"news_thumb_default"]];
+    self.postImageView.clipsToBounds=YES;
+    self.postImageView.contentMode=UIViewContentModeScaleAspectFill;
+    [self.postTitleLabel setText:self.book.title];
+    [self.postDateLabel setText:self.book.publish_time];
+    [self.postInfoView setText:self.book.desc];
+    _webStr = self.book.content_url;
     
+    
+    if(IS_IPHONE5){
+        [self.postInfoView setFrame:CGRectMake(self.postInfoView.frame.origin.x,
+                                               self.postInfoView.frame.origin.y,
+                                               290,
+                                               302)];
+    }else{
+        [self.postInfoView setFrame:CGRectMake(self.postInfoView.frame.origin.x,
+                                               self.postInfoView.frame.origin.y,
+                                               290,
+                                               210)];
+    }
+    
+    [self.infoBgView setFrame:CGRectMake(self.infoBgView.frame.origin.x,
+                                         self.infoBgView.frame.origin.y,
+                                         self.infoBgView.frame.size.width,
+                                         ScreenHeight -44 -50 -146)];
 }
 
 
@@ -53,8 +78,8 @@
 -(IBAction)readAction:(id)sender
 {
   WebShowViewController *showView = [self.storyboard instantiateViewControllerWithIdentifier:@"WebShowViewController"];
-    showView.webStr=@"detail";
-    showView.title=@"杂志内容";
+    showView.webStr=_webStr;
+    showView.title=@"杂志";
   [self.navigationController pushViewController:showView animated:YES];
 }
 

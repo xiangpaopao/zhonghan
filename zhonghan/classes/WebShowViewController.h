@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "WithBackBtnViewController.h"
+#import "MBProgressHUD.h"
 
-@interface WebShowViewController : WithBackBtnViewController
+@interface WebShowViewController : WithBackBtnViewController<UIWebViewDelegate>
 
 @property(nonatomic, strong)IBOutlet UIWebView *webView;
 @property(nonatomic, strong)NSString *webStr;
+
+@property(nonatomic, strong)MBProgressHUD *hud;
 
 @end

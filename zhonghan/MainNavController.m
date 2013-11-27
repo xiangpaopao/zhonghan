@@ -33,7 +33,15 @@
     //
     //  [self.navigationBar addSubview:navBg];
     [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"tobbar_bg"]
-                            forBarMetrics:UIBarMetricsDefault];
+                             forBarMetrics:UIBarMetricsDefault];
+    
+    if(IOS_VERSION >= 7)
+    {
+        self.navigationBar.barTintColor = [UIColor whiteColor];
+        self.navigationBar.tintColor = [UIColor whiteColor];
+        [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+        self.navigationBar.translucent = NO;
+    }
 }
 
 - (void)didReceiveMemoryWarning

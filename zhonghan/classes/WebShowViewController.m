@@ -36,9 +36,21 @@
                                                     blue:235.0/255.0
                                                    alpha:1.0];
     self.webView.opaque = NO;
-
+    [self.webView setScalesPageToFit:YES];
 }
 
+-(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType {
+    if ( inType == UIWebViewNavigationTypeLinkClicked ) {
+        [[UIApplication sharedApplication] openURL:[inRequest URL]];
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView{
+    [self.hud hide:YES];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -49,6 +61,11 @@
 {
     [super viewWillAppear:animated];
     
+    self.webView.delegate = self;
+    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.hud.mode = MBProgressHUDModeAnnularDeterminate;
+    self.hud.labelText = @"Loading";
+    [self.hud hide:NO];
     
     NSURL *url=[NSURL URLWithString:self.webStr];
     NSURLRequest *request=[NSURLRequest requestWithURL:url];

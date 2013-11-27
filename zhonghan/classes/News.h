@@ -17,11 +17,15 @@
 @property (readonly) NSString *publish_time;
 @property (readonly) NSString *content_url;
 @property (readonly) NSString *ts;
-@property (readonly) BOOL ifRead;
+@property (readonly) BOOL haveVideo;
+@property  BOOL ifRead;
+@property  BOOL ifNew;
 
 
 - (id)initWithAttributes:(NSDictionary *)attributes;
 - (void)setReaded;
+
++ (void)updateLocalTs:(NSString*)ts;
 
 + (void)globalNewsWithBlock:(void (^)(NSArray *posts, NSError *error))block page:(NSUInteger)page ts:(NSString*)ts;
 

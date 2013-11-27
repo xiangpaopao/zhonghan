@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "REPagedScrollView.h"
 
-@interface SchoolViewController : UIViewController
+
+@interface SchoolViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
 
 @property (nonatomic, strong) IBOutlet UITableView *listView;
-
+@property (nonatomic, strong) REPagedScrollView *headerView;
 
 @end

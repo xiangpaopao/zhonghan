@@ -10,19 +10,27 @@
 
 @interface SchoolsNews : NSObject
 
-@property int _id;
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSString *date;
-@property (nonatomic, strong) NSString *type;
-@property (nonatomic, strong) NSString *info;
-@property (nonatomic, strong) NSString *ifNew;
+@property (readonly) NSUInteger ID;
+@property (readonly) NSString *thumb_pic;
+@property (readonly) NSUInteger type;
+@property (readonly) NSString *title;
+@property (readonly) NSString *publish_time;
+@property (readonly) NSString *content_url;
+@property (readonly) NSUInteger category;
+@property (readonly) NSString *ts;
+@property (readonly) NSString *sub_title;
+@property (readonly) BOOL haveVideo;
+@property  BOOL ifRead;
+@property  BOOL ifNew;
 
-- (id)initWithParameters:(int)ID
-                   title:(NSString *)newTitle
-                    date:(NSString *)newDate
-                    type:(NSString *)newType
-                    info:(NSString *)newInfo
-                   ifNew:(NSString *)newIfNew;
+
+
+- (id)initWithAttributes:(NSDictionary *)attributes;
+- (void)setReaded;
+
++ (void)updateLocalTs:(NSString*)ts;
+
++ (void)globalSchoolsWithBlock:(void (^)(NSArray *posts, NSError *error))block page:(NSUInteger)page ts:(NSString*)ts;
 
 
 @end

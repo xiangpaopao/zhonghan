@@ -18,6 +18,8 @@
 @synthesize content_url = _content_url;
 @synthesize ts = _ts;
 @synthesize ifRead = _ifRead;
+@synthesize ifNew = _ifNew;
+@synthesize haveVideo = _haveVideo;
 
 - (id)initWithAttributes:(NSDictionary *)attributes {
     self = [super init];
@@ -31,6 +33,13 @@
     _publish_time = [attributes valueForKeyPath:@"publish_time"];
     _content_url = [attributes valueForKeyPath:@"content_url"];
     _ts = [attributes valueForKeyPath:@"ts"];
+    _haveVideo = [[attributes valueForKey:@"haveVedio"] isEqualToString:@"true"]?YES:NO;
+    
+    //处理服务端返回null的情况
+    if ([[NSString stringWithFormat:@"%@",_ts] isEqualToString:@"<null>"]) {
+        return nil;
+    }
+    
     
     //获取应用程序沙盒的Documents目录
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
@@ -43,23 +52,30 @@
         NSFileManager* fm = [NSFileManager defaultManager];
         [fm createFileAtPath:filename contents:nil attributes:nil];
         NSMutableArray *arr = [[NSMutableArray alloc]init];
+        [arr addObject:@"0"];
         [arr writeToFile:filename atomically:YES];
     }
     NSArray *dataArr = [[NSArray alloc] initWithContentsOfFile:filename];
-  
+    
+    //是否当天
     NSDate *tsDate = [NSDate dateWithTimeIntervalSince1970:[_ts longLongValue]];
     NSDate *nowDate=[NSDate date];
-    
     if ([self isSameDay:tsDate date2:nowDate]) {
-        for (NSString* IDStr in dataArr) {
-            if ([IDStr isEqualToString:[NSString stringWithFormat:@"%i",_ID]]) {
-                _ifRead = YES;
-            }
-            NSLog(@"%@",[attributes valueForKeyPath:@"id"]);
-        }
+        _ifNew = YES;
+    }else{
+        _ifNew = NO;
+    }
+    
+    //是否已读
+    if ([dataArr containsObject:[NSString stringWithFormat:@"%i",_ID]]) {
+        _ifRead = YES;
     }else{
         _ifRead = NO;
     }
+    
+    //NSLog(@" %i read is %hhd  new is  %hhd ",_ID,_ifRead,_ifNew);
+    NSLog(@"dataArr is %@",dataArr);
+    
     return self;
 }
 
@@ -68,8 +84,13 @@
     NSString *plistPath1 = [paths objectAtIndex:0];
     NSString *filename=[plistPath1 stringByAppendingPathComponent:@"NewsReadData.plist"];
     NSMutableArray *newArr = [[NSMutableArray alloc]initWithContentsOfFile:filename];
-    [newArr addObject:[NSString stringWithFormat:@"%i",_ID]];
+    
+    if ([newArr containsObject:[NSString stringWithFormat:@"%i",_ID]]==NO) {
+        [newArr addObject:[NSString stringWithFormat:@"%i",_ID]];
+    }
+    
     [newArr writeToFile:filename atomically:YES];
+    _ifRead = YES;
     NSLog(@"newArr %@",newArr);
 }
 
@@ -87,15 +108,18 @@
 #pragma mark -
 
 + (void)globalNewsWithBlock:(void (^)(NSArray *posts, NSError *error))block  page:(NSUInteger)page ts:(NSString*)ts{
-    NSString *path = [NSString stringWithFormat:@"api/zhonghan/news?page_size=%@&page=%d&ts=%@",PAGE_SIZE,page,ts];
-    NSLog(@"%@",path);
+    NSString *path = [NSString stringWithFormat:@"api/zhonghan/news?page_size=%@&page=%d&ts=%@",kApp_PAGE_SIZE,page,ts];
     [[AppAPIClient sharedClient] getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
         NSLog(@"globalNewsWithBlock %@",JSON);
         NSArray *postsFromResponse = [[JSON valueForKeyPath:@"response"] valueForKey:@"news"];
         NSMutableArray *mutablePosts = [NSMutableArray arrayWithCapacity:[postsFromResponse count]];
         for (NSDictionary *attributes in postsFromResponse) {
             News *news = [[News alloc] initWithAttributes:attributes];
-            [mutablePosts addObject:news];
+            
+            if (news != nil) {
+                [mutablePosts addObject:news];
+            }
+            
         }
         if (block) {
             block([NSArray arrayWithArray:mutablePosts], nil);
@@ -106,4 +130,15 @@
         }
     }];
 }
+
++ (void)updateLocalTs:(NSString*)ts{
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    NSString *plistPath1 = [paths objectAtIndex:0];
+    NSString *filename=[plistPath1 stringByAppendingPathComponent:@"HomeData.plist"];
+    NSMutableDictionary *homeDic = [NSMutableDictionary dictionaryWithContentsOfFile:filename];
+    [homeDic setObject:ts forKey:@"newsTs"];
+    [homeDic writeToFile:filename atomically:YES];
+    NSLog(@"updateLocalTs %@",homeDic);
+}
+
 @end

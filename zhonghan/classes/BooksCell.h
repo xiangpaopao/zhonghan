@@ -7,15 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Books.h"
 
 @interface BooksCell : UITableViewCell
 
-@property (nonatomic, strong) IBOutlet UIImageView *imageView;
+@property (nonatomic, strong) IBOutlet UIImageView *bookImageView;
 @property (nonatomic, strong) IBOutlet UILabel *titleLabel;
 @property (nonatomic, strong) IBOutlet UILabel *dateLabel;
 @property (nonatomic, strong) IBOutlet UILabel *infoLabel;
 @property (nonatomic, strong) IBOutlet UIImageView *ifNewView;
 
--(void)configure;
+- (void)configureWithBooks:(Books *)books;
 
 @end

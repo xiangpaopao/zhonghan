@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SchoolsNews.h"
 
 @interface SchoolCell : UITableViewCell
 
@@ -15,7 +16,8 @@
 @property (nonatomic, strong) IBOutlet UILabel *dateLabel;
 @property (nonatomic, strong) IBOutlet UILabel *infoLabel;
 @property (nonatomic, strong) IBOutlet UIImageView *ifNewView;
+@property (nonatomic, strong) IBOutlet UIImageView *haveVideo;
 
--(void)configure;
+- (void)configureWithSchool:(SchoolsNews *)schools;
 
 @end

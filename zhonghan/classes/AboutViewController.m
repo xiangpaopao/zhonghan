@@ -7,18 +7,14 @@
 //
 
 #import "AboutViewController.h"
-#import "AboutInfoViewController.h"
 
-
-@interface AboutViewController ()
-
-@property (retain, nonatomic) TGJSBridge *jsBridge;
-
+@interface AboutViewController (){
+    NSString *_aboutUrl;
+}
 
 @end
 
 @implementation AboutViewController
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -40,32 +36,48 @@
     
     [self.webView setFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-44-48-20)];
     
-    self.jsBridge = [TGJSBridge jsBridgeWithDelegate:self];
-	self.webView.delegate = self.jsBridge;
-    NSString *filePath = [[NSBundle mainBundle]pathForResource:@"about" ofType:@"html"];
-    NSURL *url = [NSURL fileURLWithPath:filePath];
+	self.webView.delegate = self;
+    
+    _aboutUrl = [NSString stringWithFormat:@"%@preview/zhonghan/about_us",kAFAppDotNetAPIBaseURLString];
+    NSURL *url=[NSURL URLWithString:_aboutUrl];
+    
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
     for (UIView *view in [[[self.webView subviews] objectAtIndex:0] subviews]) {
         if ([view isKindOfClass:[UIImageView class]]) view.hidden = YES;
     }
-}
-- (void)jsBridge:(TGJSBridge *)bridge didReceivedNotificationName:(NSString *)name userInfo:(NSDictionary *)userInfo fromWebView:(UIWebView *)webview
-{
-    NSString *msgStr = [userInfo objectForKey:@"message"];
-    
-    AboutInfoViewController *showView = [self.storyboard instantiateViewControllerWithIdentifier:@"AboutInfoViewController"];
-    showView.webStr = msgStr;
-    [self.navigationController pushViewController:showView animated:YES];
-    
+    [self setupBackButton];
 }
 
 -(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType {
-    if ( inType == UIWebViewNavigationTypeLinkClicked ) {
-        [[UIApplication sharedApplication] openURL:[inRequest URL]];
-        return NO;
-    }
+    NSURL *url = inRequest.URL;
+    NSString *urlString = url.absoluteString;
     
+    if ([urlString isEqualToString:_aboutUrl]) {
+        [self.leftButton setHidden:YES];
+    } else {
+        [self.leftButton setHidden:NO];
+    }
+    NSLog(@"url %@", urlString);
     return YES;
+}
+
+-(void)setupBackButton{
+    UIImage* image= [UIImage imageNamed:@"back_btn"];
+    UIImage* imageOn= [UIImage imageNamed:@"back_btn_on"];
+    UIButton* leftButton= [[UIButton alloc] initWithFrame:CGRectMake(0, -1, image.size.width, image.size.height)];
+    [leftButton setBackgroundImage:image forState:UIControlStateNormal];
+    [leftButton setBackgroundImage:imageOn forState:UIControlStateHighlighted];
+    [leftButton addTarget:self action:@selector(BackButtonPress:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem* leftDrawerButton = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
+    [leftButton setHidden:YES];
+    self.leftButton = leftButton;
+}
+
+#pragma mark - Button Handlers
+-(void)BackButtonPress:(id)sender{
+    NSURL *url=[NSURL URLWithString:_aboutUrl];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,9 +86,6 @@
     // Dispose of any resources that can be recreated.
   
 }
-
-
-
 
 
 @end

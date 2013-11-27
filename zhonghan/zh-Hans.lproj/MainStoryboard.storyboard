@@ -18,7 +18,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="4uv-q9-sII">
-                                <rect key="frame" x="0.0" y="65" width="320" height="353"/>
+                                <rect key="frame" x="0.0" y="63" width="320" height="353"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="home_btn_box.png" id="8fM-Dm-0WF">
@@ -226,10 +226,15 @@
                                                     <rect key="frame" x="281" y="0.0" width="31" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_vedio.png" id="R4h-LO-8mF">
+                                                    <rect key="frame" x="114" y="16" width="15" height="9"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="dateLabel" destination="CJo-Ew-OdO" id="4h4-0X-XGD"/>
+                                            <outlet property="haveVideo" destination="R4h-LO-8mF" id="Xil-VO-ct2"/>
                                             <outlet property="ifNewView" destination="HQN-r1-ClT" id="DlP-Lr-dhs"/>
                                             <outlet property="infoLabel" destination="efC-Ch-p8x" id="zmk-uL-Bk2"/>
                                             <outlet property="titleLabel" destination="dXR-Dc-XGp" id="gkm-wC-6Mi"/>
@@ -317,10 +322,15 @@
                                                     <rect key="frame" x="281" y="0.0" width="31" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_vedio.png" id="A2G-Eo-SeV">
+                                                    <rect key="frame" x="157" y="54" width="15" height="9"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="dateLabel" destination="M5Q-tm-1tw" id="UsY-2h-SrL"/>
+                                            <outlet property="haveVideo" destination="A2G-Eo-SeV" id="ltT-M6-GlH"/>
                                             <outlet property="ifNewView" destination="4zI-Ss-1Uf" id="LAf-c1-Uh2"/>
                                             <outlet property="thumbView" destination="ABB-qg-8JU" id="yg2-tG-BYI"/>
                                             <outlet property="titleLabel" destination="JUS-Fz-Rwr" id="kUT-ye-dO4"/>
@@ -383,7 +393,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="Pbj-qL-3qy">
-                                <rect key="frame" x="0.0" y="145" width="320" height="277"/>
+                                <rect key="frame" x="0.0" y="145" width="320" height="335"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.79833801500000001" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -411,7 +421,7 @@
                                 <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="4yn-nB-2ZH">
-                                <rect key="frame" x="15" y="148" width="290" height="230"/>
+                                <rect key="frame" x="15" y="158" width="290" height="245"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
@@ -441,10 +451,10 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="infoBgView" destination="Pbj-qL-3qy" id="bHL-L9-cfh"/>
-                        <outlet property="postDateLabel" destination="fuh-vz-nX6" id="08x-LY-uVy"/>
-                        <outlet property="postImageView" destination="6E0-Hi-QKH" id="IJY-fu-c20"/>
-                        <outlet property="postInfoView" destination="4yn-nB-2ZH" id="2Nh-bP-Ztl"/>
-                        <outlet property="postTitleLabel" destination="Smp-5q-XCk" id="NL7-4Q-Z4z"/>
+                        <outlet property="postDateLabel" destination="fuh-vz-nX6" id="2vt-2p-dHn"/>
+                        <outlet property="postImageView" destination="6E0-Hi-QKH" id="NUg-qB-gb1"/>
+                        <outlet property="postInfoView" destination="4yn-nB-2ZH" id="wvW-EW-FNw"/>
+                        <outlet property="postTitleLabel" destination="Smp-5q-XCk" id="vlA-Ip-H2v"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P0H-Xk-RXy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -666,6 +676,7 @@
     <resources>
         <image name="book_detail_cell_bg.png" width="20" height="123"/>
         <image name="books_new_tag.png" width="31" height="14"/>
+        <image name="books_new_tag.png" width="31" height="14"/>
         <image name="bule_small_btn.png" width="59" height="20"/>
         <image name="home_bg.png" width="320" height="568"/>
         <image name="home_btn_about.png" width="110" height="110"/>
@@ -673,17 +684,24 @@
         <image name="home_btn_box.png" width="307" height="353"/>
         <image name="home_btn_news.png" width="110" height="110"/>
         <image name="home_btn_school.png" width="110" height="100"/>
+        <image name="icon_vedio.png" width="15" height="9"/>
+        <image name="icon_vedio.png" width="15" height="9"/>
         <image name="news_new_tag.png" width="31" height="13"/>
         <image name="news_thumb_default.png" width="70" height="50"/>
         <image name="tabbar_btn1.png" width="64" height="48"/>
         <image name="tabbar_btn1_on.png" width="64" height="48"/>
+        <image name="tabbar_btn1_on.png" width="64" height="48"/>
         <image name="tabbar_btn2.png" width="64" height="48"/>
+        <image name="tabbar_btn2_on.png" width="64" height="48"/>
         <image name="tabbar_btn2_on.png" width="64" height="48"/>
         <image name="tabbar_btn3.png" width="64" height="48"/>
         <image name="tabbar_btn3_on.png" width="64" height="48"/>
+        <image name="tabbar_btn3_on.png" width="64" height="48"/>
         <image name="tabbar_btn4.png" width="64" height="48"/>
         <image name="tabbar_btn4_on.png" width="64" height="48"/>
+        <image name="tabbar_btn4_on.png" width="64" height="48"/>
         <image name="tabbar_btn5.png" width="64" height="48"/>
+        <image name="tabbar_btn5_on.png" width="64" height="48"/>
         <image name="tabbar_btn5_on.png" width="64" height="48"/>
     </resources>
     <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>

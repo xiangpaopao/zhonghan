@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "REPagedScrollView.h"
 
-@interface BooksViewController : UIViewController
+@interface BooksViewController :UIViewController<UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, strong) IBOutlet UITableView *listView;
 
 @end
